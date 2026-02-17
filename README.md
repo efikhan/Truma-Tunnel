@@ -1,3 +1,4 @@
+```markdown
 # 🚇 Truma Tunnel Manager
 
 <div align="center">
@@ -24,6 +25,7 @@
 
 ```bash
 sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/efikhan/Truma-Tunnel/main/install.sh)"
+```
 
 روش دستی
 
@@ -177,4 +179,4 @@ TXN5w8E2akLDZEswqcxCjNkJdNQnYRp78H
 <p align="center">
   <i>تقدیم به شهدای راه آزادی</i>
 </p>
-```
+``` 
