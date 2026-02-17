@@ -1,4 +1,3 @@
-```markdown
 # 🚇 Truma Tunnel Manager
 
 <div align="center">
@@ -24,7 +23,6 @@
 
 ```bash
 sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/efikhan/Truma-Tunnel/main/install.sh)"
-```
 
 Manual installation
 
