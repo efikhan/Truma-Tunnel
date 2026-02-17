@@ -1,5 +1,4 @@
----
-
+```markdown
 # 🚇 Truma Tunnel Manager
 
 <div align="center">
@@ -25,144 +24,107 @@
 
 ```bash
 sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/efikhan/Truma-Tunnel/main/install.sh)"
+```
 
 Manual installation
 
+```bash
 wget https://raw.githubusercontent.com/efikhan/Truma-Tunnel/main/install.sh
 chmod +x install.sh
 sudo ./install.sh
-
+```
 
 ---
 
 🚀 Tunnel Creation Guide
 
-After running install.sh, the main menu will appear.
+After running install.sh, the main menu will appear. Choose:
 
-Choose:
-
+```
 [1] 🚀 Create New Tunnel
+```
 
 Steps
 
 1. Select Server Side
-
-
-
-1) Iran (with HAProxy)
-2) Kharej (without HAProxy)
-
+   ```
+   1) Iran (with HAProxy)
+   2) Kharej (without HAProxy)
+   ```
 2. Enter Tunnel Name
-
-
-
-Enter tunnel name (letters/numbers only):
-
+   ```
+   Enter tunnel name (letters/numbers only):
+   ```
 3. Confirm Local IP
-
-
-
-Detected your local IP: x.x.x.x
-Is this correct? [Y/n]:
-
+   ```
+   Detected your local IP: x.x.x.x
+   Is this correct? [Y/n]:
+   ```
 4. Enter Remote IP
-
-
-
-Enter remote IP:
-
+   ```
+   Enter remote IP:
+   ```
 5. Enter Base Network
-
-
-
-Enter base network (must start with 10 and end with 0):
-
-Example:
-
-10.10.10.0
-
+   ```
+   Enter base network (must start with 10 and end with 0):
+   ```
+   Example: 10.10.10.0
 6. Set MTU (Optional)
-
-
 7. Forward Ports (Iran side only)
-
-
-
-Forward PORT (e.g. 80,443,2053):
-
+   ```
+   Forward PORT (e.g., 80,443,2053):
+   ```
 
 ---
 
 ✨ Features
 
-🚀 Easy GRE tunnel creation
-
-🛡️ Advanced anti-filter system
-
-🌐 Smart HAProxy port forwarding
-
-🔄 Automatic restart via cron jobs
-
-📊 Full service lifecycle management
-
-⚙️ Custom MTU and network control
-
-
+· 🚀 Easy GRE tunnel creation – Simple step-by-step process for both sides.
+· 🛡️ Advanced anti-filter system – Three-layer protection against DPI.
+· 🌐 Smart HAProxy port forwarding – Automatic configuration with HTTPS-like behavior.
+· 🔄 Automatic restart via cron – Periodic tunnel restart to avoid pattern detection.
+· 📊 Full service lifecycle management – Enable, restart, stop, and check status.
+· ⚙️ Custom MTU and network control – Fine-tune your tunnel performance.
 
 ---
 
 🧠 Anti-Filter System Explained
 
-The anti-filter system is designed to make GRE tunnel traffic look like normal user activity.
+The anti-filter system is designed to make GRE tunnel traffic look like normal user activity. It uses:
 
-It uses:
-
-1. HTTPS-like behavior through HAProxy
-
-
-2. Periodic GRE tunnel restart via cron
-
-
-3. Dummy HTTPS traffic generation (simulating normal browsing)
-
-
+1. HTTPS-like behavior through HAProxy – Adds delays and keep-alive to mimic web traffic.
+2. Periodic GRE tunnel restart via cron – Prevents long‑lived patterns.
+3. Dummy HTTPS traffic generation – Simulates normal browsing to Google.
 
 This helps prevent detection by DPI (Deep Packet Inspection) systems.
-
 
 ---
 
 📂 File Structure
 
+```
 /etc/systemd/system/
  ├── [tunnel-name].service
- ├── sepehr-dummy-[tunnel-name].service
+ └── sepehr-dummy-[tunnel-name].service
 
 /etc/haproxy/conf.d/
  └── [tunnel-name].cfg
 
 /usr/local/bin/
  ├── sepehr-restart-[tunnel-name].sh
- ├── sepehr-dummy-[tunnel-name].sh
-
+ └── sepehr-dummy-[tunnel-name].sh
+```
 
 ---
 
 🛠 Technologies Used
 
-Bash
-
-systemd
-
-iproute2
-
-HAProxy
-
-cron
-
-netcat
-
-
+· Bash
+· systemd
+· iproute2
+· HAProxy
+· cron
+· netcat
 
 ---
 
@@ -170,27 +132,23 @@ netcat
 
 Pull requests, feature ideas, and bug reports are welcome.
 
-
 ---
 
 💰 Support
 
 TRON (TRC20):
 
+```
 TXN5w8E2akLDZEswqcxCjNkJdNQnYRp78H
-
+```
 
 ---
 
 📬 Contact
 
-GitHub: https://github.com/efikhan/Truma-Tunnel
-
-Telegram: @efikhan_jr
-
-Email: efikhanjr@gmail.com
-
-
+· GitHub: https://github.com/efikhan/Truma-Tunnel
+· Telegram: @efikhan_jr
+· Email: efikhanjr@gmail.com
 
 ---
 
@@ -198,10 +156,8 @@ Email: efikhanjr@gmail.com
 
 MIT License
 
-
 ---
 
 Dedicated to the martyrs of the path of freedom
 
----
-
+```
