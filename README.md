@@ -201,5 +201,5 @@ TXN5w8E2akLDZEswqcxCjNkJdNQnYRp78H
 
 این پروژه با الهام از کارهای ارزشمند افراد زیر شکل گرفته است:
 
-- **[Aref HadiNezhad]** (https://github.com/ToolSeRF) - برای ایده‌های اولیه در زمینه تونل‌های GRE
+- **[Aref HadiNezhad]** (https://github.com/ToolSeRF) -
 ```
