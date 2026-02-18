@@ -64,7 +64,7 @@ Detected your local IP: x.x.x.x
 Is this correct? [Y/n]:
 ```
 
-IP شناسایی‌شده را تأیید کنید یا با زدن `n` آن را دستی وارد کنید.
+IP شناسایی‌شده را تأیید کنید یا با زدن `y` آن را دستی وارد کنید.
 
 ### ۴. IP مقصد
 
@@ -74,7 +74,7 @@ Enter remote IP:
 
 IP عمومی سرور مقابل (سمت دیگر تونل) را وارد کنید.
 
-### ۵. شبکه پایه (Base Network)
+### ۵. آیپی لوکال (Base Network)
 
 ```text
 Enter base network (must start with 10 and end with 0):
@@ -197,5 +197,3 @@ TXN5w8E2akLDZEswqcxCjNkJdNQnYRp78H
   <i>تقدیم به شهدای راه آزادی</i>
 </p>
 ```
-
-اگر می‌خوای، می‌تونم همین الان **Badgeها رو clickable** کنم (بزنن روی license / repo / bash docs) یا یک بخش **Prerequisites** هم اضافه کنم (مثلاً: `root`, `iproute2`, `haproxy` در سمت ایران، و …).
