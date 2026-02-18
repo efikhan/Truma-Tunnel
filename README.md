@@ -48,7 +48,7 @@ sudo ./install.sh
 Enter tunnel name (letters/numbers only):
 ```
 
-### ۳. تأیید IP محلی
+### ۳. تأیید IP سرور
 ```
 Detected your local IP: x.x.x.x
 Is this correct? [Y/n]:
@@ -59,7 +59,7 @@ Is this correct? [Y/n]:
 Enter remote IP:
 ```
 
-### ۵. شبکه پایه
+### ۵. آیپی لوکال
 ```
 Enter base network (must start with 10 and end with 0):
 ```
