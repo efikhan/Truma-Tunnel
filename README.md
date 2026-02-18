@@ -61,7 +61,7 @@ Enter remote IP:
 
 ### ۵. آیپی لوکال
 ```
-Enter base network (must start with 10 and end with 0):
+Enter base network (must start with 10 and end with 0): example 10:10:10:0
 ```
 
 ### ۶. MTU (اختیاری)
