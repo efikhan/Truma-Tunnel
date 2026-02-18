@@ -25,6 +25,9 @@
 
 ```bash
 sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/efikhan/Truma-Tunnel/main/install.sh)"
+
+
+
 روش دستی
 
 ```bash
