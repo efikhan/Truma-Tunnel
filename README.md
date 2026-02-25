@@ -236,8 +236,9 @@ Installation directory (where you extracted the archive):
 If you find this tool useful, consider donating to support development:
 
 TRON (TRC20):
+```
 TXN5w8E2akLDZEswqcxCjNkJdNQnYRp78H
-
+```
 ---
 
 📬 Contact & Community
