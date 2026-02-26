@@ -37,7 +37,7 @@ git clone https://github.com/efikhan/Truma-Tunnel.git
 cd Truma-Tunnel
 chmod +x *.sh
 sed -i 's/\r$//' *.sh
-/truma.sh
+sudo /truma.sh
 ```
 
 The installer will:
