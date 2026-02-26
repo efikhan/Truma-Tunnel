@@ -1,75 +1,78 @@
-# 🚇 Truma Tunnel Manager v1.9.0
+# 🚇 Truma Tunnel Manager v2
 
-**A professional and powerful script for managing GRE and Paqet tunnels with an intuitive menu interface**
-
-[![GitHub release](https://img.shields.io/github/v/release/efikhan/Truma-Tunnel?include_prereleases&label=version)](https://github.com/efikhan/Truma-Tunnel/releases/tag/v1.9.0)
-[![GitHub commits](https://img.shields.io/github/commits/v1.9.0/efikhan/Truma-Tunnel)](https://github.com/efikhan/Truma-Tunnel/commits/v1.9.0)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Shell](https://img.shields.io/badge/Shell-100%25-brightgreen)]()
-[![Telegram](https://img.shields.io/badge/Telegram-@efikhan_jr-blue)](https://t.me/efikhan_jr)
+[![Bash](https://img.shields.io/badge/Bash-4.2%2B-blue.svg)](https://www.gnu.org/software/bash/)
+[![Platform](https://img.shields.io/badge/Platform-Linux%20|%20Ubuntu%20|%20Debian%20|%20CentOS-brightgreen)]()
+[![Version](https://img.shields.io/badge/Version-2.0.0-green.svg)]()
+
+**Truma** is a professional, modular Bash script for creating and managing various types of tunnels (GRE, Paqet/KCP, EMC/EasyTier) with a beautiful interactive menu. It centralizes HAProxy port forwarding, supports anti‑filter mechanisms (coming soon), and ensures a clean, complete uninstall – all while maintaining a consistent user experience.
 
 ---
 
 ## ✨ Key Features
 
-| Feature | Description |
-|---------|-------------|
-| 🚀 **Dual Tunnel Support** | Create and manage both **GRE** (with HAProxy) and **Paqet** (KCP) tunnels from a single unified menu |
-| 🎨 **Beautiful Menus** | Colorful, intuitive interface with clear prompts and real‑time action log |
-| 🧹 **Complete Removal** | Uninstall tunnels along with all associated files – systemd services, configs, firewall rules, **and cron jobs** – leaving no leftovers |
-| 🔄 **Auto Restart (Cron)** | Set up automatic restart of any tunnel with a simple interactive menu (minute/hour intervals) |
-| 📋 **Port Management** | Easily add, list, or remove forwarded ports for any tunnel |
-| ⚙️ **MTU Control** | Change MTU of any tunnel on the fly |
-| 🔧 **Paqet Mode Switching** | Switch between KCP modes (`fast`, `fast2`, `fast3`, `normal`, `manual`) interactively |
-| 🛡️ **Anti‑Filter (Planned)** | A future update will reintroduce anti‑filter features (currently placeholder) |
+- 🧩 **Modular design** – Each tunnel type (`gre`, `paqet`, `mesh`) is a separate, self‑contained script.
+- 🎯 **Multi‑protocol support**:
+  - **GRE** – Simple point‑to‑point GRE tunnels.
+  - **KCP** – High‑performance KCP tunnels powered by [Paqet](https://github.com/hanselime/paqet).
+  - **EMC** – Mesh networks with [EasyTier](https://github.com/EasyTier/EasyTier) (inspired by [Easy-Mesh](https://github.com/Musixal/Easy-Mesh)).
+- 🛡️ **Centralized HAProxy management** – All port‑forwarding rules are handled by a dedicated `haproxy-manager.sh` module. Add, list, or remove rules without touching the tunnel configuration.
+- 🧹 **Complete uninstall** – Removes systemd services, configuration files, cron jobs, firewall scripts, and even HAProxy rules associated with a tunnel.
+- 📊 **Beautiful menu interface** – Colorful, log‑aware, and compatible with non‑interactive environments.
+- ⏰ **Auto‑restart cron** – Easily set up periodic tunnel restarts via cron.
+- 🔧 **Change MTU** – On‑the‑fly MTU adjustments (supported for GRE and Paqet).
+- 🛠️ **Self‑contained** – Automatically installs required packages (`iproute2`, `haproxy`, `curl`, etc.) and the Paqet/EasyTier binaries.
+- 🐧 **Cross‑distribution** – Works on Debian, Ubuntu, CentOS, and other Linux distributions thanks to multi‑package‑manager support.
+- 🌐 **IPv6 ready** – All tunnels support IPv6 configuration (optional).
+- 🔒 **Encryption options** – KCP and EMC tunnels support encryption.
 
 ---
 
-## 📥 Installation
+## 🚀 Quick Install
 
-### 🔹 Automatic (Recommended – always gets latest version)
-Run this one‑liner on your server as **root**:
-```bash
-sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/efikhan/Truma-Tunnel/main/install.sh)"
-```
-
-🔹 Download Specific Version (v1.9.0)
-
-You can download the three main script files directly from the v1.9.0 Release page:
-
-· truma.sh – Main unified manager
-· gre-manager.sh – GRE tunnel engine
-· paqet.sh – Paqet tunnel engine
-
-After downloading, make them executable and run:
+Run the following one‑liner as **root** (or with `sudo`):
 
 ```bash
-chmod +x truma.sh gre-manager.sh paqet.sh
-sudo ./truma.sh
+curl -sSL https://raw.githubusercontent.com/efikhan/Truma-Tunnel/main/install.sh | sudo bash
 ```
 
-🔹 Manual Installation (from source archive)
+The installer will:
 
-```bash
-wget https://github.com/efikhan/Truma-Tunnel/archive/refs/tags/v1.9.0.tar.gz
-tar -xzf v1.9.0.tar.gz
-cd Truma-Tunnel-1.9.0
-sudo ./install.sh
-```
+· Download all five scripts to /opt/truma/.
+· Make them executable.
+· Create a symbolic link /usr/local/bin/truma for easy access.
+· Launch Truma automatically.
 
-After installation, the main script truma.sh will be available. You can run it anytime with:
-
-```bash
-sudo ./truma.sh
-```
+After installation, just type truma in your terminal to start the manager.
 
 ---
 
-🚀 Quick Start Guide
+📦 Manual Installation
 
-After launching truma.sh, the main menu appears:
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/efikhan/Truma-Tunnel.git
+   cd Truma-Tunnel
+   ```
+2. Make all scripts executable:
+   ```bash
+   chmod +x *.sh
+   ```
+3. Run as root:
+   ```bash
+   sudo ./truma.sh
+   ```
+
+---
+
+📖 Detailed Usage Guide
+
+Main Menu
+
+When you start Truma, you’ll see:
 
 ```
+  Truma Tunnel Manager
   [1] 🚀 Create New Tunnel
   [2] 🔍 Show Active Tunnels
   [3] 🧹 Uninstall Tunnel
@@ -79,173 +82,241 @@ After launching truma.sh, the main menu appears:
   [0] ❌ Exit
 ```
 
-Creating a Tunnel
-
-Select 1 and then choose the tunnel type:
-
-```
-Select tunnel type:
-1) GRE (with HAProxy)
-2) Paqet (KCP)
-```
-
-GRE Tunnel Steps
-
-1. Choose side – Iran (with HAProxy) or Kharej (without HAProxy)
-2. Enter tunnel name – e.g., mygre (letters, numbers, _, - allowed)
-3. Confirm local IP – detected automatically; confirm or enter manually
-4. Enter remote IP – public IP of the opposite server
-5. Enter base network – must start with 10 and end with .0, e.g., 10.20.30.0
-6. GRE key – automatically generated and displayed (save it for the opposite side)
-7. If Iran side: enter ports to forward (comma‑separated, e.g., 80,443,8535)
-8. Tunnel is created and started – status is shown
-
-Paqet Tunnel Steps
-
-1. Choose side – Iran (client) or Kharej (server)
-2. Enter tunnel name – same rules as GRE
-3. If client: enter remote server IP
-4. Enter tunnel port – e.g., 2095 (default)
-5. Encryption key – auto‑generated (displayed) or you can enter your own
-6. Enter MTU – default 1280 (you can change later via menu)
-7. Choose KCP mode – select one of the five modes (default fast2)
-8. Gateway MAC – auto‑detected; if detection fails, you will be prompted to enter it
-9. If client: enter forwarded ports (comma‑separated) or leave empty
-10. Tunnel is created and started – key and status displayed
+Navigate by entering the corresponding number.
 
 ---
 
-🔍 Managing Tunnels
+🌐 Creating a GRE Tunnel
 
-From the main menu, select [2] Show Active Tunnels, then choose a tunnel to see its service menu:
+GRE is a classic point‑to‑point tunnel. It uses a base network (e.g., 10.20.30.0) to derive the tunnel IPs: the Direct side gets .1, the Remote side gets .2.
+
+Steps on both servers:
+
+1. Select [1] Create New Tunnel → [1] GRE.
+2. Choose the side:
+   · Direct – typically the Iran server (will later forward ports via HAProxy).
+   · Remote – typically the Kharej server.
+3. Enter a tunnel name (e.g., mytunnel). Use only letters, numbers, _, or -.
+4. Confirm or correct your local public IP (auto‑detected).
+5. Enter the remote public IP of the other server.
+6. Specify a base network (must start with 10 and end with 0, e.g., 10.20.30.0).
+7. For the GRE key, you can either:
+   · Press Enter to auto‑generate a random 4‑digit key.
+   · Enter a custom number (must be the same on both sides).
+8. The tunnel service will be created and started automatically.
+
+Testing the GRE tunnel:
+
+· On Direct side: ping 10.20.30.2
+· On Remote side: ping 10.20.30.1
+
+If ping fails, check:
+
+· Firewall rules for protocol 47 (GRE)
+· That the GRE key matches on both sides
+· System rp_filter settings (set to 0 if needed)
+
+Adding port forwarding (via HAProxy):
+
+· Go to [4] Port Management → [1] Add Port Forward.
+· Select your GRE tunnel.
+· The target IP will be automatically detected (the peer’s tunnel IP). Confirm or override.
+· Enter the bind port (on the Iran side) and the destination port (on the Kharej side).
+· The rule is added and HAProxy reloaded automatically.
+
+---
+
+⚡ Creating a KCP Tunnel (Paqet)
+
+KCP tunnels are optimized for high‑latency links and work in client/server mode.
+
+Steps:
+
+1. Select [1] Create New Tunnel → [2] KCP.
+2. Choose the side:
+   · Direct – client (usually Iran)
+   · Remote – server (usually Kharej)
+3. Enter a tunnel name.
+4. For the client side, enter the remote server IP (the server’s public IP). For the server side, you’ll be prompted for a public IP (auto‑detected; you can confirm or change it).
+5. Set the tunnel port (default 8535). Both sides must use the same port.
+6. Either auto‑generate or enter an encryption key (must match on both sides).
+7. Choose an MTU (default 1280).
+8. Select a KCP mode:
+   · fast – balanced speed, low latency
+   · fast2 – higher speed, lower latency (recommended)
+   · fast3 – maximum speed, aggressive
+   · normal – conservative, like TCP
+   · manual – advanced manual settings
+9. For the server side, you may be asked for the gateway MAC (usually auto‑detected; if not, you can enter it manually).
+10. For the client side, you can specify forwarded ports (comma‑separated). These ports will be forwarded internally by Paqet, not via HAProxy.
+
+The service will start automatically. Check its status with:
+
+```bash
+systemctl status paqet-<name>.service
+```
+
+Managing KCP ports:
+
+· Use the [4] Port Management menu, but note that for Paqet, the operations are handled by its own functions (paqet::add_port_interactive, etc.). When you select a Paqet tunnel, you’ll be prompted to add ports in a Paqet‑specific way.
+
+Changing KCP mode:
+
+· In the [2] Show Active Tunnels menu, select your Paqet tunnel and choose option [6] Change Mode (KCP). You can then switch between the available KCP modes without recreating the tunnel.
+
+---
+
+🔗 Creating an EMC Tunnel (EasyTier – Mesh)
+
+EMC creates a mesh network, allowing multiple servers to connect directly. It uses a base network similar to GRE.
+
+Steps:
+
+1. Select [1] Create New Tunnel → [3] EMC.
+2. Choose the side:
+   · Direct – one peer (e.g., Iran)
+   · Remote – another peer (e.g., Kharej)
+3. Enter a tunnel name.
+4. Specify a base network (e.g., 10.144.144.0). The Direct side will get .1, the Remote side .2.
+5. Enter a domain (any label, e.g., IranServer).
+6. Set the tunnel port (default 8535).
+7. Enter the remote IP of the other server (only one peer at creation time; additional peers can be added later by editing the service file).
+8. A network secret will be auto‑generated – you can change it, but it must match on all peers.
+9. Choose the protocol (default tcp).
+10. Answer prompts for encryption, multi‑thread, and IPv6 (yes/no).
+
+The service will start automatically. Use the [2] Show Active Tunnels menu, select your EMC tunnel, and choose [6] Show Peers to verify connectivity.
+
+Port forwarding with EMC:
+
+EMC does not have built‑in port forwarding. Instead, use the [4] Port Management menu to add HAProxy rules. When you add a rule for an EMC tunnel, the target IP will be auto‑detected as the peer’s tunnel IP (.2 for a Direct server, .1 for a Remote server).
+
+---
+
+🧭 Managing Tunnels
+
+From the main menu, select [2] Show Active Tunnels. You’ll see a list of all existing tunnels. Choose one to enter its management menu:
 
 ```
-  Tunnel: mytunnel
-
+[Tunnel: mytunnel]
   [1] 🟢 Enable & Start
   [2] 🔄 Restart
   [3] ⏹️  Stop & Disable
   [4] 📊 Status
   [5] ⏰ Set Auto Restart (Cron)
-  [6] 🔧 Change Mode          (Paqet only)
+  [6] ... (protocol‑specific actions)
   [0] ↩️  Back
 ```
 
-Auto Restart (Cron)
-
-When you select [5], you can:
-
-· Remove any existing cron job for this tunnel
-· Set a new restart interval (minutes or hours)
-
-The cron job will be automatically removed when you uninstall the tunnel via the script.
-
----
-
-🧹 Manual Cleanup Commands
-
-If you ever need to completely remove a tunnel manually (e.g., if the script’s uninstall fails), use the following commands.
-
-🟢 Remove a GRE tunnel named erfan
-
-```bash
-# Stop and disable service
-systemctl stop erfan.service 2>/dev/null
-systemctl disable erfan.service 2>/dev/null
-
-# Remove service file and symlinks
-rm -f /etc/systemd/system/erfan.service
-find /etc/systemd/system -type l -name "erfan.service" -delete 2>/dev/null
-
-# Remove HAProxy config
-rm -f /etc/haproxy/conf.d/erfan.cfg
-
-# Delete GRE interface
-ip link set erfan down 2>/dev/null
-ip tunnel del erfan 2>/dev/null
-
-# Remove any cron jobs for this tunnel
-crontab -l 2>/dev/null | grep -v "systemctl restart erfan.service" | crontab - 2>/dev/null
-
-# Reload systemd
-systemctl daemon-reload
-systemctl reset-failed 2>/dev/null
-```
-
-🔵 Remove a Paqet tunnel named erfan
-
-```bash
-# Stop and disable all related services
-systemctl stop paqet-erfan.service paqet@erfan.service paqet-fw-erfan.service 2>/dev/null
-systemctl disable paqet-erfan.service paqet@erfan.service paqet-fw-erfan.service 2>/dev/null
-
-# Remove service files
-rm -f /etc/systemd/system/paqet-erfan.service /etc/systemd/system/paqet@erfan.service /etc/systemd/system/paqet-fw-erfan.service
-
-# Remove config and firewall script
-rm -f /etc/paqet-tunnel/instances/erfan.yaml
-rm -f /etc/paqet-tunnel/firewall/fw-erfan.sh
-
-# Remove cron jobs (both direct commands and script‑based)
-crontab -l 2>/dev/null | grep -v "systemctl restart erfan.service" | grep -v "truma-restart-erfan" | crontab - 2>/dev/null
-
-# Remove any dummy scripts (if present)
-rm -f /usr/local/bin/truma-restart-erfan.sh /usr/local/bin/truma-dummy-erfan.sh 2>/dev/null
-
-# Reload systemd
-systemctl daemon-reload
-systemctl reset-failed 2>/dev/null
-```
-
-After running these commands, no trace of the tunnel remains.
+· Enable & Start – starts and enables the tunnel at boot.
+· Restart – restarts the tunnel service.
+· Stop & Disable – stops the tunnel and disables autostart.
+· Status – shows the current status and recent logs.
+· Set Auto Restart – creates a cron job to restart the tunnel periodically (choose minutes or hours).
+· Protocol‑specific actions:
+  · For Paqet: Change Mode (KCP mode).
+  · For EMC: Show Peers (display connected mesh peers).
 
 ---
 
-📂 File Structure (v1.9.0)
+🔧 Port Management (HAProxy)
+
+All HAProxy rules are managed centrally from [4] Port Management. The submenu:
 
 ```
-/etc/systemd/system/
- ├── <name>.service                # GRE tunnel
- ├── paqet-<name>.service           # Paqet tunnel (dash style)
- ├── paqet@<name>.service           # Paqet tunnel (at style)
- └── paqet-fw-<name>.service        # Paqet firewall service
-
-/etc/haproxy/conf.d/
- └── <name>.cfg                     # HAProxy per‑tunnel config (GRE)
-
-/etc/paqet-tunnel/
- ├── instances/
- │   └── <name>.yaml                 # Paqet configuration
- └── firewall/
-     └── fw-<name>.sh                 # Paqet firewall rules
-
-/usr/local/bin/
- ├── truma-restart-<name>.sh         # (optional) restart script for cron
- └── truma-dummy-<name>.sh            # (optional) dummy traffic script
-
-Installation directory (where you extracted the archive):
- ├── truma.sh                        # Main unified script
- ├── gre-manager.sh                   # GRE engine module
- └── paqet.sh                         # Paqet engine module
+  Port Management
+  [1] ➕ Add Port Forward (HAProxy for GRE/EMC)
+  [2] 📋 List Forwarded Ports
+  [3] ❌ Remove Port Forward
+  [4] 🔄 Reload HAProxy
+  [5] 🗑️  Remove All HAProxy Rules
+  [6] 📊 HAProxy Status
+  [0] ↩️  Back
 ```
+
+· Add Port Forward: Select a tunnel (GRE or EMC). The target IP is auto‑detected from the tunnel configuration. You can override it if needed. Then enter the bind port (on the Iran side) and the destination port (on the Kharej side). HAProxy will be reloaded automatically.
+· List Forwarded Ports: Select a tunnel to see all HAProxy rules associated with it.
+· Remove Port Forward: Select a tunnel, then enter the bind port to remove its rule.
+· Reload HAProxy: Force a reload after manual changes (though reloads happen automatically after add/remove).
+· Remove All HAProxy Rules: Deletes every rule from HAProxy (use with caution).
+· HAProxy Status: Shows the current status of the HAProxy service.
+
+Note: Paqet tunnels manage their own port forwarding internally; they are not affected by this HAProxy menu.
 
 ---
 
-💰 Support the Project
+🧹 Uninstalling a Tunnel
 
-If you find this tool useful, consider donating to support development:
+Select [3] Uninstall Tunnel from the main menu. You will be shown a list of existing tunnels. Choose one, then type yes to confirm. This will:
 
-TRON (TRC20):
-```
-TXN5w8E2akLDZEswqcxCjNkJdNQnYRp78H
-```
+· Stop and disable the tunnel service.
+· Remove its systemd unit file and all symlinks.
+· Delete any associated firewall scripts.
+· Remove cron jobs created by Truma for that tunnel.
+· Also remove any HAProxy rules linked to that tunnel (by scanning rule files for the tunnel name).
+· Reload systemd and HAProxy.
+
+After uninstall, no traces of the tunnel remain.
+
 ---
 
-📬 Contact & Community
+📦 Changing MTU
 
-· GitHub: efikhan/Truma-Tunnel
-· Telegram (Developer): @efikhan_jr
-· Channel (Announcements): @TrumaTunnel
+Use [6] Change MTU to adjust the MTU of an existing GRE or Paqet tunnel. Select the tunnel, enter the new MTU value (between 576 and 1600 for GRE, up to 9000 for Paqet), and the script will:
+
+· Update the running interface (if possible).
+· Patch the systemd unit file so the change persists after reboot.
+· Restart the service.
+
+For EMC tunnels, MTU change is not supported directly (you would need to modify the EasyTier configuration manually).
+
+---
+
+🛡️ Anti-Filter System (Coming Soon)
+
+This menu option is a placeholder for future enhancements that will help bypass internet restrictions. Stay tuned!
+
+---
+
+📁 Project Structure
+
+After installation, all files reside in /opt/truma/:
+
+```
+/opt/truma/
+├── truma.sh               # Main menu and core functions
+├── gre-manager.sh          # GRE tunnel logic
+├── paqet.sh                # KCP (Paqet) tunnel logic
+├── mesh-manager.sh         # EMC (EasyTier) tunnel logic
+└── haproxy-manager.sh      # Centralized HAProxy rule manager
+```
+
+A symlink /usr/local/bin/truma points to truma.sh for easy execution.
+
+---
+
+💰 Support Development
+
+If you find Truma useful and want to support its ongoing development, you can send a donation to the following TRC20 address:
+
+TRX (TRC20): TXN5w8E2akLDZEswqcxCjNkJdNQnYRp78H
+
+Your support is greatly appreciated! 🙏
+
+---
+
+📢 Community
+
+Join our Telegram channel for announcements, updates, and discussions:
+👉 @TrumaTunnel
+
+---
+
+🙏 Acknowledgements
+
+· Aref Hadinezhad – for his invaluable contribution to the GRE tunnel project, which served as the foundation for this work.
+· The developers of EasyTier and Paqet for their amazing tunnel engines.
+· Musixal for the inspiration from the Easy-Mesh project.
 
 ---
 
@@ -255,7 +326,13 @@ This project is licensed under the MIT License – see the LICENSE file for deta
 
 ---
 
-Dedicated to the martyrs of freedom.
+⭐ Show Your Support
+
+If you like Truma, please consider giving it a star on GitHub!
+For issues or feature requests, open an issue.
+
+---
+
+Truma – Tunnel like a pro! 🚇
 
 ```
-http://github.com/ToolSeRF/Sepehr-GRE-FORWARDER
