@@ -15,7 +15,7 @@
 - 🎯 **Multi‑protocol support**:
   - **GRE** – Simple point‑to‑point GRE tunnels.
   - **KCP** – High‑performance KCP tunnels powered by [Paqet](https://github.com/hanselime/paqet).
-  - **EMC** – Mesh networks with [EasyTier](https://github.com/EasyTier/EasyTier) (inspired by [Easy-Mesh](https://github.com/Musixal/Easy-Mesh)).
+  - **EMC** – Mesh networks with [EasyTier](https://github.com/EasyTier/EasyTier)
 - 🛡️ **Centralized HAProxy management** – All port‑forwarding rules are handled by a dedicated `haproxy-manager.sh` module. Add, list, or remove rules without touching the tunnel configuration.
 - 🧹 **Complete uninstall** – Removes systemd services, configuration files, cron jobs, firewall scripts, and even HAProxy rules associated with a tunnel.
 - 📊 **Beautiful menu interface** – Colorful, log‑aware, and compatible with non‑interactive environments.
