@@ -33,11 +33,7 @@
 Run the following one‑liner as **root** (or with `sudo`):
 
 ```bash
-git clone https://github.com/efikhan/Truma-Tunnel.git
-cd Truma-Tunnel
-chmod +x *.sh
-sed -i 's/\r$//' *.sh
-sudo ./truma.sh
+sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/efikhan/Truma-Tunnel/main/install.sh)"
 ```
 
 The installer will:
