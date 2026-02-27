@@ -1,41 +1,41 @@
-Truma Tunnel Manager 🚀
+# Truma Tunnel Manager 🚀
 
-https://img.shields.io/badge/License-MIT-yellow.svg
-https://img.shields.io/badge/language-bash-green.svg
-https://img.shields.io/badge/version-2.1.1-blue.svg
-https://img.shields.io/badge/PRs-welcome-brightgreen.svg
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Bash](https://img.shields.io/badge/language-bash-green.svg)](https://www.gnu.org/software/bash/)
+[![Version](https://img.shields.io/badge/version-2.1.1-blue.svg)](https://github.com/efikhan/Truma-Tunnel/releases)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/efikhan/Truma-Tunnel/pulls)
 
-Truma is a professional, menu‑driven Bash script suite that simplifies the creation, management, and monitoring of tunneling protocols on Linux servers. It provides a unified interface for GRE, KCP (via Paqet), and EMC (EasyTier Mesh) tunnels, with integrated HAProxy‑based port forwarding and automatic restart scheduling.
+**Truma** is a professional, menu‑driven Bash script suite that simplifies the creation, management, and monitoring of tunneling protocols on Linux servers. It provides a unified interface for GRE, KCP (via Paqet), and EMC (EasyTier Mesh) tunnels, with integrated HAProxy‑based port forwarding and automatic restart scheduling.
 
-🎯 Perfect for bypassing internet censorship, secure remote access, and building VPNs.
-
----
-
-✨ Key Features
-
- 
-🧩 Modular Design Easily add new protocols by dropping in a new manager script.
-🎛️ Interactive Menu Navigate with color‑coded logs and clear prompts.
-🚀 GRE Tunnels Full support with key, MTU, and IP configuration.
-⚡ KCP Tunnels Powered by Paqet – fast, low‑latency, with multiple modes.
-🌐 EMC (EasyTier Mesh) Decentralised mesh VPN with encryption and peer discovery.
-🔀 Port Forwarding Centralised HAProxy manager for GRE/EMC; Paqet has native TCP forwarding.
-⏰ Auto‑Restart Set per‑tunnel cron jobs for automatic restart at chosen intervals.
-📏 MTU Adjustment Change MTU on the fly (where supported).
-📜 Comprehensive Logging All actions logged and displayed in‑menu.
-🔧 Non‑Interactive Mode Suitable for automated deployment (NONINTERACTIVE=1).
-🧹 Clean Uninstall Removes service files, configs, cron jobs, and HAProxy rules.
+> 🎯 **Perfect for bypassing internet censorship, secure remote access, and building VPNs.**
 
 ---
 
-🚀 Quick Start
+## ✨ Key Features
 
-Installation
+| | |
+|---|---|
+| 🧩 **Modular Design** | Easily add new protocols by dropping in a new manager script. |
+| 🎛️ **Interactive Menu** | Navigate with color‑coded logs and clear prompts. |
+| 🚀 **GRE Tunnels** | Full support with key, MTU, and IP configuration. |
+| ⚡ **KCP Tunnels** | Powered by **Paqet** – fast, low‑latency, with multiple modes. |
+| 🌐 **EMC (EasyTier Mesh)** | Decentralised mesh VPN with encryption and peer discovery. |
+| 🔀 **Port Forwarding** | Centralised HAProxy manager for GRE/EMC; Paqet has native TCP forwarding. |
+| ⏰ **Auto‑Restart** | Set per‑tunnel cron jobs for automatic restart at chosen intervals. |
+| 📏 **MTU Adjustment** | Change MTU on the fly (where supported). |
+| 📜 **Comprehensive Logging** | All actions logged and displayed in‑menu. |
+| 🔧 **Non‑Interactive Mode** | Suitable for automated deployment (`NONINTERACTIVE=1`). |
+| 🧹 **Clean Uninstall** | Removes service files, configs, cron jobs, and HAProxy rules. |
+
+---
+
+## 🚀 Quick Start
+
+### Installation
 
 Choose the installation method that works best for your location:
 
-Option 1: For users outside Iran (fastest)
-
+#### **Option 1: For users outside Iran (fastest)**
 ```bash
 curl -fsSL -o install.sh https://raw.githubusercontent.com/efikhan/Truma-Tunnel/main/install.sh
 sed -i 's/\r$//' install.sh
@@ -177,3 +177,5 @@ This project is licensed under the MIT License – see the LICENSE file for deta
 · GitHub Repository: https://github.com/efikhan/Truma-Tunnel
 · Telegram Channel: @TrumaTunnel
 · Issues: GitHub Issues
+
+```
