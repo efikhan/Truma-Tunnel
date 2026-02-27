@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Bash](https://img.shields.io/badge/language-bash-green.svg)](https://www.gnu.org/software/bash/)
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/efikhan/Truma-Tunnel/releases)
+[![Version](https://img.shields.io/badge/version-2.1.1-blue.svg)](https://github.com/efikhan/Truma-Tunnel/releases)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/efikhan/Truma-Tunnel/pulls)
 
 **Truma** is a professional, menu‑driven Bash script suite that simplifies the creation, management, and monitoring of tunneling protocols on Linux servers. It provides a unified interface for GRE, KCP (via Paqet), and EMC (EasyTier Mesh) tunnels, with integrated HAProxy‑based port forwarding and automatic restart scheduling.
