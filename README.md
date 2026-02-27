@@ -37,9 +37,7 @@ Choose the installation method that works best for your location:
 
 #### **Option 1: For users outside Iran (fastest)**
 ```bash
-curl -fsSL -o install.sh https://raw.githubusercontent.com/efikhan/Truma-Tunnel/main/install.sh
-sed -i 's/\r$//' install.sh
-sudo bash install.sh
+sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/efikhan/Truma-Tunnel/main/install.sh)"
 ```
 
 Option 2: For users inside Iran (if direct download is slow or blocked)
