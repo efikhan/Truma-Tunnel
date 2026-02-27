@@ -1,3 +1,4 @@
+
 #!/usr/bin/env bash
 # =============================================================================
 # truma.sh – Truma Tunnel Manager (Main Menu)
@@ -351,7 +352,7 @@ get_tunnel_type() {
 
 # =============================================================================
 # Helper to get target IP for a tunnel (for HAProxy)
-# Fixed version using both grep and sed fallback
+# Using grep and sed for compatibility
 # =============================================================================
 get_target_ip_for_tunnel() {
     local name="$1"
@@ -367,9 +368,9 @@ get_target_ip_for_tunnel() {
     elif [[ "$type" == "mesh" ]]; then
         local service_file="/etc/systemd/system/mesh-${name}.service"
         if [[ -f "$service_file" ]]; then
-            # Try grep first
+            # First try grep for '-i' pattern
             target_ip=$(grep -o '\-i [0-9.]\+' "$service_file" | head -1 | cut -d' ' -f2)
-            # If not found, use sed as fallback
+            # Fallback with sed
             if [[ -z "$target_ip" ]]; then
                 target_ip=$(sed -n 's/.*-i \([0-9.]\+\).*/\1/p' "$service_file" | head -1)
             fi
