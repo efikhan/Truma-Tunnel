@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # =============================================================================
-# gre-manager.sh � GRE Tunnel Manager for Truma
+# gre-manager.sh – GRE Tunnel Manager for Truma
 # =============================================================================
 
 set -euo pipefail
@@ -138,9 +138,9 @@ get_peer_ip_from_local_cidr() {
 
 gre::create_interactive() {
     local side
-    echo -e "\n${CYAN}${NC}"
+    echo -e "\n${CYAN}══════════════════════════════════════════════════${NC}"
     echo -e "${GREEN}  Create GRE Tunnel${NC}"
-    echo -e "${CYAN}${NC}"
+    echo -e "${CYAN}══════════════════════════════════════════════════${NC}"
     echo "Select side:"
     echo "  1) Direct"
     echo "  2) Remote"
@@ -195,15 +195,15 @@ gre::create_interactive() {
     echo -e "${YELLOW}GRE key (enter to auto-generate):${NC}"
     read -r -p "> " key
     if [[ -z "$key" ]]; then
-        #   openssl rand   date +%N   
+        # استفاده از openssl rand به جای date +%N برای سازگاری بیشتر
         if command -v openssl &>/dev/null; then
-            key=$(openssl rand -hex 2 | head -c4)  # 4   = 16  = 0-65535
-            key=$((0x$key % 10000))  #    4 
+            key=$(openssl rand -hex 2 | head -c4)  # 4 کاراکتر هگز = 16 بیت = 0-65535
+            key=$((0x$key % 10000))  # تبدیل به عدد 4 رقمی
         else
-            # fallback    /dev/urandom
+            # fallback با استفاده از /dev/urandom
             key=$(od -An -N2 -i /dev/urandom | awk '{print $1 % 10000}')
         fi
-        echo -e "\n${GREEN} Generated GRE key: ${CYAN}${key}${NC}"
+        echo -e "\n${GREEN}🔧 Generated GRE key: ${CYAN}${key}${NC}"
         echo -e "${YELLOW}   (Press Enter to continue)${NC}"
         read -r
     else
@@ -257,9 +257,9 @@ EOF
     systemctl daemon-reload
     systemctl enable --now "${name}.service" >/dev/null 2>&1 && add_log "Service started."
 
-    echo -e "\n${GREEN}${NC}"
+    echo -e "\n${GREEN}══════════════════════════════════════════════════════════════${NC}"
     echo -e "${GREEN}  Tunnel '$name' created successfully (${side_name})${NC}"
-    echo -e "${GREEN}${NC}"
+    echo -e "${GREEN}══════════════════════════════════════════════════════════════${NC}"
     echo "  Local tunnel IP  : ${local_tun_ip}/30"
     echo "  Peer tunnel IP   : ${peer_tun_ip}"
     echo
@@ -286,9 +286,9 @@ gre::remove_port_interactive() {
 
 gre::remove() {
     local name="$1"
-    echo -e "\n${CYAN}${NC}"
+    echo -e "\n${CYAN}══════════════════════════════════════════════════${NC}"
     echo -e "${RED}  Uninstall GRE Tunnel${NC}"
-    echo -e "${CYAN}${NC}"
+    echo -e "${CYAN}══════════════════════════════════════════════════${NC}"
     echo "This will remove:"
     echo "  - /etc/systemd/system/${name}.service"
     echo "  - ALL autostart symlinks (*.wants) for $name"
@@ -335,9 +335,9 @@ gre::remove() {
 
 gre::change_mtu() {
     local name="$1" mtu
-    echo -e "\n${CYAN}${NC}"
+    echo -e "\n${CYAN}══════════════════════════════════════════════════${NC}"
     echo -e "${GREEN}  Change MTU for GRE Tunnel${NC}"
-    echo -e "${CYAN}${NC}"
+    echo -e "${CYAN}══════════════════════════════════════════════════${NC}"
     ask_until_valid "New MTU (576-1600):" valid_mtu mtu
 
     add_log "Setting MTU on interface $name to $mtu..."
