@@ -160,12 +160,10 @@ paqet::install() {
     fi
 
     _paqet::log "Downloading paqet v${version}..."
-    # Ensure curl is available
     if ! command -v curl &>/dev/null; then
         _ensure_cmd curl || { _paqet::error "curl is required for download."; return 1; }
     fi
-    # Use -f to fail on HTTP error
-    if ! curl -fLsS --max-time 20 -o /tmp/paqet.tar.gz "$url"; then
+    if ! curl -fL --retry 3 --retry-delay 2 --max-time 30 -o /tmp/paqet.tar.gz "$url"; then
         _paqet::error "Download failed. Provide a local binary in repo/bin or /root/paqet/"
         return 1
     fi
@@ -440,7 +438,6 @@ paqet::list_ports() {
     fi
 
     echo -e "${CYAN}Forwarded ports for $name:${NC}"
-    # استخراج پورت‌ها با sed (جایگزین grep -oP)
     local ports
     ports=$(sed -n 's/.*listen: "[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+:\([0-9]\+\)".*/\1/p' "$config_file")
     if [[ -z "$ports" ]]; then
@@ -462,16 +459,13 @@ paqet::add_ports() {
     role=$(grep "^role:" "$config_file" | awk '{print $2}' | tr -d '"')
     [[ "$role" == "client" ]] || { _paqet::error "Only client tunnels can forward ports."; return 1; }
 
-    # خواندن پورت‌های فعلی با sed
     local current_ports=()
     while IFS= read -r port; do
         current_ports+=("$port")
     done < <(sed -n 's/.*listen: "[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+:\([0-9]\+\)".*/\1/p' "$config_file")
 
-    # ترکیب و یکتا‌سازی
     local all_ports=("${current_ports[@]}" "${new_ports[@]}")
-    local unique_ports=()
-    local seen=""
+    local unique_ports=(); local seen=""
     for port in "${all_ports[@]}"; do
         if [[ ! " $seen " =~ " $port " ]]; then
             unique_ports+=("$port")
@@ -479,7 +473,6 @@ paqet::add_ports() {
         fi
     done
 
-    # ساخت بخش forward جدید
     local forward_block="forward:"
     for port in "${unique_ports[@]}"; do
         forward_block+=$'\n'"  - listen: \"0.0.0.0:${port}\""
@@ -538,7 +531,6 @@ paqet::remove_port() {
     role=$(grep "^role:" "$config_file" | awk '{print $2}' | tr -d '"')
     [[ "$role" == "client" ]] || { _paqet::error "Only client tunnels can forward ports."; return 1; }
 
-    # خواندن پورت‌های فعلی با sed
     local current_ports=()
     while IFS= read -r port; do
         current_ports+=("$port")
@@ -559,7 +551,6 @@ paqet::remove_port() {
         return 1
     fi
 
-    # ساخت بخش forward جدید
     local forward_block="forward:"
     for p in "${new_ports[@]}"; do
         forward_block+=$'\n'"  - listen: \"0.0.0.0:${p}\""
