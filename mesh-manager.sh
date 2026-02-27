@@ -101,17 +101,15 @@ mesh::install_core() {
     print_step "Downloading EMC core for $arch ..."
     local base_url="${MESH_CORE_URL_BASE}/${url_subdir}"
     
-    # Ensure curl is available
     if ! command -v curl &>/dev/null; then
         _ensure_cmd curl || { print_error "curl is required for download."; return 1; }
     fi
 
-    # Download with -f to fail on HTTP error
-    if ! curl -fLs "${base_url}/easytier-cli" -o "$MESH_BIN_DIR/easytier-cli"; then
+    if ! curl -fL --retry 3 --retry-delay 2 --max-time 30 "${base_url}/easytier-cli" -o "$MESH_BIN_DIR/easytier-cli"; then
         print_error "Failed to download easytier-cli"
         return 1
     fi
-    if ! curl -fLs "${base_url}/easytier-core" -o "$MESH_BIN_DIR/easytier-core"; then
+    if ! curl -fL --retry 3 --retry-delay 2 --max-time 30 "${base_url}/easytier-core" -o "$MESH_BIN_DIR/easytier-core"; then
         print_error "Failed to download easytier-core"
         return 1
     fi
@@ -361,7 +359,7 @@ mesh::show_secret() {
     local service_file="/etc/systemd/system/mesh-${name}.service"
     if [[ -f "$service_file" ]]; then
         local secret
-        secret=$(grep -oP '(?<=--network-secret )[^ ]+' "$service_file" 2>/dev/null)
+        secret=$(sed -n 's/.*--network-secret \([^ ]\+\).*/\1/p' "$service_file" | head -1)
         if [[ -n "$secret" ]]; then
             echo -e "${CYAN}Network secret for $name:${NC} $secret"
         else
