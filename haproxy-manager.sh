@@ -132,7 +132,19 @@ haproxy::add_rule() {
 
     local rule_file="${HAPROXY_CONFD}/rule_${bind_port}.cfg"
     if [[ -f "$rule_file" ]]; then
-        print_warning "Rule for port $bind_port already exists. Overwriting."
+        print_warning "Rule for port $bind_port already exists."
+        if [[ $NONINTERACTIVE -eq 0 ]]; then
+            read_confirm "Overwrite existing rule?" confirm "n"
+            if [[ "$confirm" != true ]]; then
+                print_info "Rule not added."
+                return 0
+            fi
+        else
+            if [[ "${FORCE:-0}" -ne 1 ]]; then
+                print_error "Rule exists and FORCE not set. Aborting."
+                return 1
+            fi
+        fi
     fi
 
     {
@@ -186,7 +198,6 @@ haproxy::apply() {
         if systemctl reload haproxy &>/dev/null; then
             print_success "HAProxy reloaded."
         else
-            # اگر reload ممکن نبود (مثلاً سرویس فعال نبود)، try start
             if systemctl start haproxy &>/dev/null; then
                 print_success "HAProxy started."
             else
