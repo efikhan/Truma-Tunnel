@@ -165,9 +165,11 @@ select_best_dns() {
         echo -n "  Testing $name ($dns) ... "
         local time
         time=$(timeout 3 dig +time=2 +tries=1 "$test_domain" @"$dns" 2>/dev/null | grep 'Query time:' | awk '{print $4}' || echo "9999")
-        if [[ "$time" -lt 9999 ]] && [[ "$time" -gt 0 ]]; then
+        # Remove non‑numeric characters
+        time="${time//[!0-9]/}"
+        if [[ -n "$time" && "$time" -lt 9999 && "$time" -gt 0 ]]; then
             echo "${time} ms"
-            if (( time < best_time )); then
+            if [[ "$time" -lt "$best_time" ]]; then
                 best_time=$time
                 best_dns=$dns
             fi
@@ -191,9 +193,7 @@ nameserver 8.8.8.8
 nameserver 1.1.1.1
 EOF
 
-        # !!! IMPORTANT: Do not lock the file with chattr +i to avoid conflicts with systemd-resolved/NetworkManager
-        # chattr +i /etc/resolv.conf 2>/dev/null || true
-
+        # !!! IMPORTANT: Do not lock the file with chattr +i
         print_success "System DNS configured"
     else
         print_warning "No suitable DNS found. Using default DNS."
@@ -246,12 +246,18 @@ select_best_mirror() {
         local name="${entry#*|}"
         echo -n "  Testing $name ($mirror) ... "
         local speed
-        speed=$(curl -s -w "%{speed_download}" -o /dev/null --max-time 5 --ipv4 "http://$mirror/$test_path" 2>/dev/null | awk '{print int($1/1024)}' || echo 0)
-        if [[ "$speed" -gt 0 ]]; then
+        speed=$(curl -s -w "%{speed_download}" -o /dev/null --max-time 5 --ipv4 "http://$mirror/$test_path" 2>/dev/null)
+        if [[ -z "$speed" || "$speed" == "0" ]]; then
+            echo "Failed"
+            continue
+        fi
+        speed=$(echo "$speed" | awk '{print int($1/1024)}')
+        speed="${speed//[!0-9]/}"
+        if [[ -n "$speed" && "$speed" -gt 0 ]]; then
             echo "${speed} KB/s"
-            if (( speed > best_speed )); then
-                best_speed=$speed
-                best_mirror=$mirror
+            if [[ "$speed" -gt "$best_speed" ]]; then
+                best_speed="$speed"
+                best_mirror="$mirror"
             fi
         else
             echo "Failed"
@@ -260,7 +266,6 @@ select_best_mirror() {
 
     if [[ -n "$best_mirror" ]]; then
         print_success "Best mirror: $best_mirror (${best_speed} KB/s)"
-        # Configure mirror based on distribution
         if [[ -f /etc/os-release ]]; then
             . /etc/os-release
             case "$ID" in
@@ -305,19 +310,16 @@ install_truma() {
     local INSTALL_DIR="/opt/truma"
     local REPO_URL="https://github.com/efikhan/Truma-Tunnel.git"
 
-    # Ensure git is available
     if ! command -v git &>/dev/null; then
         print_step "Installing git..."
         install_pkg git || { print_error "Failed to install git."; exit 1; }
     fi
 
-    # Remove previous installation if exists
     if [[ -d "$INSTALL_DIR" ]]; then
         print_step "Removing old installation at $INSTALL_DIR..."
         rm -rf "$INSTALL_DIR"
     fi
 
-    # Clone repository
     print_step "Cloning Truma repository..."
     mkdir -p "$INSTALL_DIR"
     if git clone --depth 1 "$REPO_URL" "$INSTALL_DIR" >/dev/null 2>&1; then
@@ -329,12 +331,10 @@ install_truma() {
 
     cd "$INSTALL_DIR"
 
-    # Fix line endings
     print_step "Fixing line endings (removing CRLF)..."
     sed -i 's/\r$//' *.sh 2>/dev/null || true
     print_success "Line endings fixed."
 
-    # Set execute permissions
     print_step "Setting execute permissions..."
     chmod +x *.sh
     print_success "Permissions set."
@@ -348,7 +348,7 @@ install_truma() {
 }
 
 # -----------------------------------------------------------------------------
-# Main menu (clean, professional look)
+# Main menu
 # -----------------------------------------------------------------------------
 main_menu() {
     clear
@@ -393,28 +393,23 @@ EOF
 # Main
 # -----------------------------------------------------------------------------
 main() {
-    # Root check
     if [[ $EUID -ne 0 ]]; then
         echo -e "${YELLOW}This script must be run as root. Re‑running with sudo...${NC}"
         exec sudo bash "$0" "$@"
     fi
 
-    # Create log file
     mkdir -p "$(dirname "$LOG_FILE")"
     touch "$LOG_FILE"
     log "=== Truma Full Installer started ==="
 
-    # Show menu
     main_menu
 
-    # Run optimizer if inside Iran
     if [[ $IRAN_OPTIMIZE -eq 1 ]]; then
         run_optimizer
     else
         print_info "Skipping Iran optimizations."
     fi
 
-    # Always install Truma
     install_truma
 }
 
